@@ -1,42 +1,123 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>Domain Active!</title>
-
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
-<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700"  rel="stylesheet" type="text/css">
-
-<style>
-body {
-    font-family: "Open Sans", sans-serif;
-    font-size: 200%;
-}
-</style>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connection Verification</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #333;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            position: relative;
+        }
+        .hidden {
+            display: none;
+        }
+        .dots {
+            margin-top: 10px;
+            font-size: 24px;
+            color: lightgray;
+        }
+        @keyframes dots {
+            0%, 20% { content: '•'; }
+            40% { content: '••'; }
+            60% { content: '•••'; }
+            80%, 100% { content: ''; }
+        }
+        .dots::after {
+            content: '';
+            animation: dots 1s steps(4, end) infinite;
+        }
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            color: #ccc;
+            font-size: 14px;
+        }
+        .nav {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .nav a {
+            color: #00aaff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        #hello img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
-<center>
-<br><br>
-Congratulations! Your new domain is now active.<br>
-<span style="font-style: italic;">You can now use FTP or the file manager in your cPanel to upload your site.</span><br>
-<br>
-<br>
+    <div class="nav">
+        <a href="#">USA Rules</a>
+    </div>
+    <div id="verifying">
+        <h1>Verifying the connection</h1>
+        <div class="dots"></div>
+    </div>
+    <div id="sending" class="hidden">
+        <h1>Sending request</h1>
+        <div class="dots"></div>
+    </div>
+    <div id="waiting" class="hidden">
+        <h1>Wait 1 minute for the owner approval</h1>
+        <div class="dots"></div>
+    </div>
+    <div id="login" class="hidden">
+        <h1>login:</h1>
+        <input type="password" id="password" placeholder="Enter password">
+        <button onclick="verifyPassword()">Submit</button>
+    </div>
+    <div id="hello" class="hidden">
+        <img src="fbi.jpg" alt="Denyied">
+    </div>
+    <div class="footer">
+        Security by USA Guvernamental LTD
+    </div>
+    <script>
+        let currentPage = 'verifying';
 
-<div style="text-align: center;"><b>Need more power than free hosting ?<br>We would recommend using <br><a class="btn btn-success btn-xl" href="https://ifastnet.com/portal" target ="_blank">Premium Web Hosting</a></b></div>
-<br>
+        setTimeout(() => {
+            if (currentPage === 'verifying') {
+                document.getElementById('verifying').classList.add('hidden');
+                document.getElementById('sending').classList.remove('hidden');
+                currentPage = 'sending';
+            }
+        }, 15000); // 15 secunde pentru "Verifying the connection"
 
+        setTimeout(() => {
+            if (currentPage === 'sending') {
+                document.getElementById('sending').classList.add('hidden');
+                document.getElementById('waiting').classList.remove('hidden');
+                currentPage = 'waiting';
+            }
+        }, 25000); // 10 secunde pentru "Sending request" (15+10=25)
 
-<div style="text-align: center;">Would you like to start your own free hosting company?<br><a class="btn btn-success btn-xl" href="http://myownfreehost.net" target ="_blank">Click here to find out how!</a></div>
-<br>
-<div style="text-align: center;"><b><iframe src="https://www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Ffree.byethost&amp;width=570&amp;colorscheme=light&amp;show_faces=true&amp;border_color&amp;stream=false&amp;header=false&amp;height=270" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:570px; height:270px;" allowTransparency="true"></iframe><br><a href="https://ifastnet.com/portal/sharedhosting.php" target="_blank" ><img src="http://ifastnet.com/byet-728x90-ultimate-blue3.gif" width="768" height="90" alt="Paid Hosting Premium Hosting"></a><br></div>
+        setTimeout(() => {
+            if (currentPage === 'waiting') {
+                document.getElementById('waiting').classList.add('hidden');
+                document.getElementById('login').classList.remove('hidden');
+                currentPage = 'login';
+            }
+        }, 85000); // 1 minut (60 secunde) pentru "Wait 1 minute for the owner approval"
+
+        function verifyPassword() {
+            document.getElementById('login').classList.add('hidden');
+            document.getElementById('hello').classList.remove('hidden');
+            currentPage = 'hello';
+        }
+    </script>
 </body>
 </html>
